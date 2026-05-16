@@ -1,0 +1,13 @@
+# Secrets
+U6/server/.env
+
+# Build outputs
+U6/build/
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
