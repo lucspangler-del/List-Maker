@@ -227,7 +227,7 @@ export default function App() {
       }
 
       // Do not navigate current app page.
-
+      // Popup window will handle the Google OAuth and redirect back to the backend callback.
 
     } catch {
       setShareStatus("Could not start Google Calendar connection.");
