@@ -44,6 +44,20 @@ function isConfigured() {
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 
+app.get('/', (req, res) => {
+  res.json({
+    ok: true,
+    service: 'U6 Google Calendar backend',
+    routes: {
+      health: '/health',
+      authGoogle: '/auth/google',
+      authGoogleCallback: '/auth/google/callback',
+      calendarToday: '/api/calendar/today',
+    },
+  });
+});
+
+
 app.get('/auth/google', (req, res) => {
   const configured = isConfigured();
   // Helpful logging to diagnose placeholder/missing env vars.
