@@ -1,0 +1,24 @@
+U6 GitHub upload file set (secrets excluded)
+
+Include these files (<= 20):
+1) U6/package.json
+2) U6/package-lock.json
+3) U6/README.md
+4) U6/README_GOOGLE_CALENDAR.md
+5) U6/public/index.html
+6) U6/src/App.jsx
+7) U6/src/AuthGate.jsx
+8) U6/src/index.jsx
+9) U6/src/reportWebVitals.js
+10) U6/src/setupTests.js
+11) U6/src/styles.css
+12) U6/server/package.json
+13) U6/server/package-lock.json
+14) U6/server/index.js
+15) .gitignore
+
+Do NOT upload:
+- U6/server/.env (keep local; contains OAuth secrets)
+- U6/build/ (generated output)
+- node_modules/ (generated deps)
+
