@@ -2,11 +2,13 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { google } = require('googleapis');
 
 const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
+
 
 // Environment variables (create a .env file in U6/server)
 // - GOOGLE_CLIENT_ID
@@ -160,6 +162,7 @@ app.post('/api/google/connect', async (req, res) => {
 app.get('/api/calendar/today', async (req, res) => {
   const userId = getUserIdFromRequest(req);
 
+
   const tokens = tokenStore.get(userId);
   if (!tokens) {
     return res.status(401).json({ error: 'Not connected to Google Calendar.' });
@@ -201,7 +204,27 @@ app.get('/api/calendar/today', async (req, res) => {
   }
 });
 
+// Serve the React app (SPA) from ../build when present.
+const clientBuildPath = path.join(__dirname, '..', 'build');
+
+app.use(express.static(clientBuildPath));
+
+// SPA catch-all route: return index.html for unknown routes.
+// This allows React Router to handle client-side routes.
+app.get('*', (req, res, next) => {
+  // Don’t override API routes or other server endpoints.
+  if (req.path.startsWith('/api/') || req.path.startsWith('/auth/')) {
+    return next();
+  }
+
+  res.sendFile(path.join(clientBuildPath, 'index.html'), (err) => {
+    if (err) {
+      return res.status(404).json({ error: 'Frontend build not found.', clientBuildPath });
+    }
+  });
+});
+
+
 app.listen(PORT, () => {
   console.log(`U6 Google Calendar backend listening on http://localhost:${PORT}`);
 });
-
